@@ -14,13 +14,13 @@
                         <li><a href="#">Услуги</a></li>
                         <li>
                             <?php if (isset($_SESSION['id'])): ?>
-                                <a href="#">
+                                <a href="<?php echo BSE_URL . "../../index.php" ;?>">
                                     <i class="fa fa-user"></i>
                                     <?php echo $_SESSION['login']; ?>
                                 </a>
                                 <ul>
                                     <?php if ($_SESSION['admin']): ?>
-                                        <li><a href="#">Админ панель</a></li>
+                                        <li><a href="<?php echo VASE_URL . "../../admin/posts/index.php"; ?>">Админ панель</a></li>
                                     <?php endif; ?>
                                     <li><a href="<?php echo BASE_URL . "logout.php"; ?>">Выход</a></li>
                                 </ul>

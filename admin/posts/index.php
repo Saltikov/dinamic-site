@@ -30,12 +30,12 @@ include "../../app/controllers/posts.php";
                 <div class="col-1">ID</div>
                 <div class="col-3">Название</div>
                 <div class="col-2">Автор</div>
-                <div class="col-4">Управение</div>
+                <div class="col-4">Управление</div>
             </div>
             <?php foreach($postsAdm as $key => $post): ?>
                 <div class="row post">
                     <div class="id col-1"><?=$key + 1;?></div>
-                    <div class="title col-3"><?=$post['title'];?></div>
+                    <div class="title col-5"><?= mb_substr($post['title'] , 0,  50, 'UTF-8') . '...' ?></div>
                     <div class="author col-2"><?=$post['username'];?></div>
                     <div class="red col-1"><a href="edit.php?id=<?=$post['id'];?>">edit</a></div>
                     <div class="del col-1"><a href="edit.php?delete_id=<?=$post['id'];?>">delete</a></div>

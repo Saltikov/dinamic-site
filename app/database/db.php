@@ -145,3 +145,63 @@ function selectAllFromPostsWithhUser($table1, $table2){
     dbCheckError($query);
     return $query->fetchAll();
 }
+
+//выборка записей (posts) с автором на главную
+function selectAllFromPostsWithhUserOnIndex($table1, $table2, $limit, $offset){
+    global $pdo;
+    $sql = "SELECT p.*, u.username  FROM $table1 AS p JOIN $table2 AS u ON p.id_user = u.id WHERE p.status = 1 LIMIT $limit OFFSET $offset";
+    $query = $pdo->prepare($sql);
+    $query ->execute();
+    dbCheckError($query);
+    return $query->fetchAll();
+}
+
+//выборка записей (posts) с автором на главную карусели слайдов
+function selectTopTopicFromPostsOnIndex($table1){
+    global $pdo;
+    $sql = "SELECT * FROM $table1 WHERE id_topic ='1' ";
+    $query = $pdo->prepare($sql);
+    $query ->execute();
+    dbCheckError($query);
+    return $query->fetchAll();
+
+}
+
+
+//поиск по заголовкам и содержимым(простой)
+function searchInTitleAndContent($text, $table1, $table2){
+    $text = trim(strip_tags(stripcslashes(htmlspecialchars($text))));
+    global $pdo;
+    $sql = "SELECT 
+            p.*, u.username  
+            FROM $table1 AS p 
+            JOIN $table2 AS u 
+            ON p.id_user = u.id 
+            WHERE p.status = 1
+            AND p.title  LIKE '%text%' OR p.content LIKE '%text%'";
+    $query = $pdo->prepare($sql);
+    $query ->execute();
+    dbCheckError($query);
+    return $query->fetchAll();
+}
+
+
+//выборка записи (post) с автором для Singl
+function selectPostFromPostsWithhUserOnSingle($table1, $table2, $id){
+    global $pdo;
+    $sql = "SELECT p.*, u.username  FROM $table1 AS p JOIN $table2 AS u ON p.id_user = u.id WHERE p.id = $id";
+    $query = $pdo->prepare($sql);
+    $query ->execute();
+    dbCheckError($query);
+    return $query->fetch();
+}
+
+//пагинация
+function countRow($table){
+    global $pdo;
+    $sql = "SELECT COUNT(*) FROM $table WHERE status = 1";
+    $query = $pdo->prepare($sql);
+    $query ->execute();
+    dbCheckError($query);
+    return $query->fetchColumn();
+}
